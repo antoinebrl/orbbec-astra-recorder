@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  liveness-recorder:
+    image: anv.liveness3d-recorder
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ipc: host
+    privileged: true
+    environment:
+      - DISPLAY=$DISPLAY
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /dev:/dev
+      - ./data:/astra_depth_recorder/data
+    command: /bin/bash -c "/astra_depth_recorder/src/build/astra_depth_recorder ./data/"
